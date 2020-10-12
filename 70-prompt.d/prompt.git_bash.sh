@@ -26,9 +26,10 @@ prompt_set_mca() {
     PS1+="\$(__git_ps1 ' $BLUE[%s]$C')" # git status
 
     PS1="\$(R=\$?; echo \"$PS1$CYAN\$(printf '%2X' \$R)\")$C" # return code
-
     PS1+="$YELLOW\${PROXY_MARKER}" # proxy
-    PS1+="$CYAN""b\$$C " # roothash
+    PS1+="$CYAN""b" # shell name letter (b for bash)
+    PS1+="\${SHLVL}" # shell level
+    PS1+="\$$C " # roothash
 }
 
 prompt_set_simple() {
