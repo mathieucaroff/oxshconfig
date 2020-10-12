@@ -1,0 +1,1 @@
+rm "$sc_root_dir"/selector-test.py

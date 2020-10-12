@@ -1,0 +1,4 @@
+
+help() {
+  bash -c "help $*"
+}
