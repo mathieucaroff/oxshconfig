@@ -32,7 +32,7 @@ prompt_set_mca() {
 }
 
 prompt_set_simple() {
-    PS1="[\t] \u@\h:\w \$"
+    PS1="[\t] \u@\h:\w \$ "
 }
 
 prompt_set_with_git() {
@@ -44,7 +44,7 @@ prompt_set_with_git() {
     GIT_PS1_SHOWUNTRACKEDFILES=t
     GIT_PS1_SHOWUPSTREAM=t
 
-    PS1="[\t] \u@\h:\w\$(__git_ps1 ' [%s]') \$"
+    PS1="[\t] \u@\h:\w\$(__git_ps1 ' [%s]') \$ "
 }
 
 prompt_set_ox() {
