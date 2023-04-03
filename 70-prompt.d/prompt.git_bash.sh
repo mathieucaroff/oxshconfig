@@ -4,6 +4,8 @@ else source /usr/share/git-core/contrib/completion/git-prompt.sh || true
 fi
 
 prompt_set_mca() {
+    OLD_PS1="$PS1"
+
     prompt_set_with_git # set the GIT_PS1_* variables
 
     local C="\[\e[0m\]" # "clear" (no color)
@@ -13,17 +15,19 @@ prompt_set_mca() {
     local BLUE="\[\e[34;1m\]"
     local CYAN="\[\e[36;1m\]"
 
-    OLD_PS1="$PS1"
-
     PS1=""
     PS1+="$DARK[\t]$C " # time
 
-    PS1+="$GREEN\$(whoami|sed s+^postgres$+pg+)@" # username
-    PS1+="\$(hostname|sed s+^cmv++)$C:" # hostname
-    PS1+="$YELLOW\$(pwd|sed -E 's+^/pgsql/softs/web/mca(/|$)+//mca\1+; s+^$HOME+~+')$C" # working directory
+    PS1+="$GREEN\$(whoami)@" # username
+    PS1+="\$(hostname)$C:" # hostname
+    PS1+="$YELLOW\$(pwd)$C" # working directory
 
     declare -Ff __git_ps1 >/dev/null && \
-    PS1+="\$(__git_ps1 ' $BLUE[%s]$C')" # git status
+    # git
+    PS1+=" $BLUE["
+    PS1+="\$(__git_ps1 '%s')" # git status
+    PS1+=" $(git stash list | wc -l)" # git stash count
+    PS1+="]$C"
 
     PS1="\$(R=\$?; echo \"$PS1$CYAN\$(printf '%2X' \$R)\")$C" # return code
     PS1+="$YELLOW\${PROXY_MARKER}" # proxy
