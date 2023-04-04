@@ -26,7 +26,7 @@ prompt_set_mca() {
     # git
     PS1+=" $BLUE["
     PS1+="\$(__git_ps1 '%s')" # git status
-    PS1+=" $(git stash list | wc -l)" # git stash count
+    PS1+=" \$(git stash list | wc -l)" # git stash count
     PS1+="]$C"
 
     PS1="\$(R=\$?; echo \"$PS1$CYAN\$(printf '%2X' \$R)\")$C" # return code
