@@ -1,10 +1,6 @@
 if declare -Ff __git_ps1 >/dev/null; # "if __git_ps1 is a function"
 then : # do nothing
 else
-# we declare an empty function, that is supposed to be overriden in the next line.
-# This is done so that if it turns out that git is not installed on the system and the
-# next line fails, this will not turn into a permanent issue in the displayed prompt.
-function __git_ps1() { :; }
 source /usr/share/git-core/contrib/completion/git-prompt.sh || true
 fi
 
