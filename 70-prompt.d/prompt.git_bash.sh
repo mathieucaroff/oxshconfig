@@ -1,6 +1,11 @@
 if declare -Ff __git_ps1 >/dev/null; # "if __git_ps1 is a function"
 then : # do nothing
-else source /usr/share/git-core/contrib/completion/git-prompt.sh || true
+else
+# we declare an empty function, that is supposed to be overriden in the next line.
+# This is done so that if it turns out that git is not installed on the system and the
+# next line fails, this will not turn into a permanent issue in the displayed prompt.
+function __git_ps1() { :; }
+source /usr/share/git-core/contrib/completion/git-prompt.sh || true
 fi
 
 prompt_set_mca() {
@@ -24,10 +29,7 @@ prompt_set_mca() {
 
     declare -Ff __git_ps1 >/dev/null && \
     # git
-    PS1+=" $BLUE["
-    PS1+="\$(__git_ps1 '%s')" # git status
-    PS1+=" \$(git stash list | wc -l)" # git stash count
-    PS1+="]$C"
+    PS1+="\$(__git_ps1 ' $BLUE[%s \$(git stash list | wc -l)]$C')" # git status - git stash count
 
     PS1="\$(R=\$?; echo \"$PS1$CYAN\$(printf '%2X' \$R)\")$C" # return code
     PS1+="$YELLOW\${PROXY_MARKER}" # proxy
