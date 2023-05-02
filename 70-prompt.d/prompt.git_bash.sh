@@ -11,17 +11,23 @@ prompt_set_mca() {
 
     local C="\[\e[0m\]" # "clear" (no color)
     local DARK="\[\e[30;1m\]"
+    local RED="\[\e[31;1m\]"
     local GREEN="\[\e[32;1m\]"
     local YELLOW="\[\e[33;1m\]"
     local BLUE="\[\e[34;1m\]"
     local CYAN="\[\e[36;1m\]"
 
+    local GREEN_OR_RED="$GREEN"
+    if [ "$EUID" -eq 0 ]; then
+      GREEN_OR_RED="$RED"
+    fi
+
     PS1=""
     PS1+="$DARK[\t]$C " # time
 
-    PS1+="$GREEN\$(whoami)@" # username
+    PS1+="$GREEN_OR_RED\$(whoami)@" # username
     PS1+="\$(hostname)$C:" # hostname
-    PS1+="$YELLOW\$(pwd)$C" # working directory
+    PS1+="$YELLOW\w$C" # working directory
 
     declare -Ff __git_ps1 >/dev/null && \
     # git
@@ -31,7 +37,7 @@ prompt_set_mca() {
     PS1+="$YELLOW\${PROXY_MARKER}" # proxy
     PS1+="$CYAN""b" # shell name letter (b for bash)
     PS1+="\${SHLVL}" # shell level
-    PS1+="\$$C " # roothash
+    PS1+="\\\$$C " # roothash
 }
 
 prompt_set_simple() {
